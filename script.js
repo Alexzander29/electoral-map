@@ -5,6 +5,7 @@ var newPolitician = function (name) {
 	candidate.name = name;
 	candidate.electionResults = [];
 	candidate.totalVotes = 0;
+	candidate.partyColor;
 
 	candidate.countVotes = function () {
 		for(i=0; i<this.electionResults.length;i++) {
@@ -24,6 +25,9 @@ var newPolitician = function (name) {
 
 var trump = newPolitician("Trump");
 var biden = newPolitician("Biden");
+
+trump.partyColor = [132,17,11];
+biden.partyColor = [245,141,136];
 //state votes
 // = [
 //9,3,11,6,55,9,7,33,29,16,4,4,20,11,6,6,8,8,4,10,11,16,10,6,10,3,5,6,4,14,5,29,15,3,18,7,7,20,4,9,3,11,38,6,3,13,12,5,10,3
@@ -43,14 +47,64 @@ biden.electionResults[4] = 38;
 trump.electionResults[43] = 11;
 biden.electionResults[43] = 27;
 
+//create a function for setting the state results
 
+var setStateResults = function (state) {
+
+	theStates[state].winner = null;
+
+	if (trump.electionResults[state] > biden.electionResults[state]) {
+		theStates[state].winner = trump;
+	}
+	else if (trump.electionResults[state] == biden.electionResults[state]) {
+		console.log("Tie in in state of " + state + ".");
+	}
+	else {
+		theStates[state].winner = biden;
+	}
+
+	var stateWinner = theStates[state].winner;
+	if (stateWinner !== null) {
+		theStates[state].rgbColor = stateWinner.partyColor;
+	} 
+	else {
+	theStates[state].rgbColor = [148,2,211];
+	}
+
+}
 trump.countVotes();
 biden.countVotes();
 
-console.log(trump.electionResults);
-console.log(biden.electionResults);
+
+
+//console.log(trump.electionResults);
+//console.log(biden.electionResults);
 
 console.log("Trump " + trump.totalVotes);
 console.log("Biden " + biden.totalVotes);
 
 
+var winner;
+//declarea  winner
+if (trump.electionResults > biden.electionResults) {
+	winner = trump.name
+}
+else if (trump.electionResults == biden.electionResults) {
+	winner = null;
+}
+else {
+	winner = biden.name;
+}
+
+
+
+var table = document.getElementById("countryResults");
+var row = table.children[0].children[0];
+row.children[0].innerText = trump.name;
+row.children[1].innerText = trump.totalVotes;
+row.children[2].innerText = biden.name;
+row.children[3].innerText = biden.totalVotes;
+row.children[5].innerText = winner;
+
+
+//console.log(trump.color + biden.color);
