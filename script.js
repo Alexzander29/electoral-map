@@ -71,6 +71,43 @@ var setStateResults = function (state) {
 	theStates[state].rgbColor = [148,2,211];
 	}
 
+
+	var stateTable = document.getElementById("stateResults");
+
+	var header = stateTable.children[0].children[0];
+
+	var stateName = header.children[0];
+
+	stateName.innerText = theStates[state].nameFull;
+	header.children[1].innerText = theStates[state].nameAbbrev;
+
+	var stateInfoTable = document.getElementById('stateResults');
+	var header = stateInfoTable.children[0];
+	var body = stateInfoTable.children[1];
+	var stateName = header.children[0].children[0];
+	var abbrev = header.children[0].children[1];
+	var candidate1Name = body.children[0].children[0];
+	var candidate2Name = body.children[1].children[0];
+	var candidate1Results = body.children[0].children[1];
+	var candidate2Results = body.children[1].children[1];
+	var winnersName = body.children[2].children[1];
+
+	stateName.innerText = theStates[state].nameFull;
+	abbrev.innerText = theStates[state].nameAbbrev;
+	candidate1Name.innerText = trump.name;
+	candidate2Name.innerText = biden.name;
+
+	candidate1Results.innerText = trump.electionResults[state];
+	candidate2Results.innerText = biden.electionResults[state];
+
+	if (theStates[state].winner === null) {
+		winnersName.innerText = "DRAW";
+	}
+	else {
+		winnersName.innerText = theStates[state].winner.name;
+	}
+
+
 }
 trump.countVotes();
 biden.countVotes();
@@ -105,6 +142,7 @@ row.children[1].innerText = trump.totalVotes;
 row.children[2].innerText = biden.name;
 row.children[3].innerText = biden.totalVotes;
 row.children[5].innerText = winner;
+
 
 
 //console.log(trump.color + biden.color);
